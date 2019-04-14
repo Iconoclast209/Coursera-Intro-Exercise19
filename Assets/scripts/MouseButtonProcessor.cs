@@ -37,6 +37,24 @@ public class MouseButtonProcessor : MonoBehaviour
         }
 
         // explode teddy bear as appropriate
+        if(Input.GetAxis("ExplodeTeddyBear") > 0)
+        {
+            if(!explodeInputOnPreviousFrame)
+            {
+                GameObject teddyToExplode = GameObject.FindGameObjectWithTag("TeddyBear");
+                if (teddyToExplode != null)
+                {
+                    Vector3 explodePosition = teddyToExplode.transform.position;
+                    Instantiate(prefabExplosion, explodePosition, Quaternion.identity);
+                    Destroy(teddyToExplode);
+                }
+                explodeInputOnPreviousFrame = true;
+            }
+        }
+        else
+        {
+            explodeInputOnPreviousFrame = false;
+        }
 		
 	}
 
