@@ -22,8 +22,34 @@ public class MouseButtonProcessor : MonoBehaviour
 	void Update()
 	{
         // spawn teddy bear as appropriate
+        if (Input.GetAxis("SpawnTeddyBear") > 0)
+        {
+            if(!spawnInputOnPreviousFrame)
+            {
+                // spawn teddy bear
+                Instantiate(prefabTeddyBear, DetermineWorldPosition(), Quaternion.identity);
+                spawnInputOnPreviousFrame = true;
+            }
+        }
+        else
+        {
+            spawnInputOnPreviousFrame = false;
+        }
 
         // explode teddy bear as appropriate
 		
 	}
+
+    Vector3 DetermineWorldPosition()
+    {
+        //Get Mouse Position
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = -Camera.main.transform.position.z;
+
+        //Convert Mouse Position to desired character position
+        Vector3 newPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        //Return new position
+        return newPosition;
+    }
 }
